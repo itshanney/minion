@@ -19,8 +19,7 @@ Minion revolves around a few simple, but universal concepts in the infrastructur
 
 Colophon
 ========
-Minion is designed to be simply dropped into a Servlet container from the WAR file. Minion
-makes use of the following libraries:
+Minion makes use of the following libraries:
 
 * Language: __[Java](http://www.oracle.com/technetwork/java/index.html)__
 * Build Tool: __[Maven](http://maven.apache.org)__
