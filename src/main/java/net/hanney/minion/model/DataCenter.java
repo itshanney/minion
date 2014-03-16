@@ -1,18 +1,32 @@
 package net.hanney.minion.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.joda.time.DateTime;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Model that defines a Data Center which may hold Servers
  *
  * @author justin.hanney
  */
-public class DataCenter {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name="data_centers")
+public class DataCenter implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @Column(name = "data_center_id")
     private String dataCenterId;
+
+    @Column(name = "data_center_name")
     private String dataCenterName;
-    private DateTime createDate;
+
+    @Column(name = "create_date")
+    private Date createDate;
 
     public String getDataCenterId() {
         return dataCenterId;
@@ -30,11 +44,11 @@ public class DataCenter {
         this.dataCenterName = dataCenterName;
     }
 
-    public DateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(final DateTime createDate) {
+    public void setCreateDate(final Date createDate) {
         this.createDate = createDate;
     }
 
