@@ -1,9 +1,11 @@
 package net.hanney.minion.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.joda.time.DateTime;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Model that defines a particular Class (i.e. generation) of Servers.
@@ -15,15 +17,41 @@ import java.math.BigDecimal;
  *
  * @author justin.hanney
  */
-public class ServerType {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "server_types")
+public class ServerType implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "type_id")
     private Long typeId;
+
+    @Column(name = "type_name")
     private String typeName;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "cpu_type")
     private String cpuType;
+
+    @Column(name = "cpu_cores")
     private Integer cpuCores;
-    private BigDecimal tcoDollars, ramGb, hddGb;
-    private DateTime createDate;
+
+    @Column(name = "tco_dollars")
+    private BigDecimal tcoDollars;
+
+    @Column(name = "ram_gb")
+    private BigDecimal ramGb;
+
+    @Column(name = "hdd_gb")
+    private BigDecimal hddGb;
+
+    @Column(name = "create_date")
+    private Date createDate;
 
     public ServerType() {
         super();
@@ -93,11 +121,11 @@ public class ServerType {
         this.tcoDollars = tcoDollars;
     }
 
-    public DateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(final DateTime createDate) {
+    public void setCreateDate(final Date createDate) {
         this.createDate = createDate;
     }
 

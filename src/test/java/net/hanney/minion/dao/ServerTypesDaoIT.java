@@ -1,11 +1,10 @@
 package net.hanney.minion.dao;
 
-import net.hanney.minion.model.DataCenter;
+import net.hanney.minion.model.ServerType;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -13,28 +12,28 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Integrations tests for the {@link net.hanney.minion.dao.DataCentersDao} that
+ * Integrations tests for the {@link net.hanney.minion.dao.ServerTypesDao} that
  * connect to a real database (running on localhost).
  *
  * @author justin.hanney
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/test-context-localhost.xml"})
-public class DataCentersDaoIT {
+public class ServerTypesDaoIT {
 
     @Autowired
-    private DataCentersDao dataCentersDao;
+    private ServerTypesDao serverTypesDao;
 
     @Test
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void testInsert() {
-        final DataCenter dataCenter = new DataCenter();
-        dataCenter.setDataCenterId("TESTDC");
-        dataCenter.setDataCenterName("Test Data Center");
-        dataCenter.setCreateDate(new DateTime(DateTimeZone.UTC).toDate());
+        final ServerType serverType = new ServerType();
+        serverType.setTypeName("g1.small");
+        serverType.setDescription("Generation 1 - Small Instance");
+        serverType.setCreateDate(new DateTime(DateTimeZone.UTC).toDate());
 
-        dataCentersDao.insert(dataCenter);
-        dataCentersDao.delete(dataCenter);
+        serverTypesDao.insert(serverType);
+        serverTypesDao.delete(serverType);
     }
 
 }

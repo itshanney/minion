@@ -28,6 +28,10 @@ public class DataCenter implements Serializable {
     @Column(name = "create_date")
     private Date createDate;
 
+    public DataCenter() {
+        super();
+    }
+
     public String getDataCenterId() {
         return dataCenterId;
     }

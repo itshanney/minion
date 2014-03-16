@@ -1,9 +1,10 @@
 package net.hanney.minion.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Model that defines an Operating System which may run on a particular Server
@@ -13,7 +14,9 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "operating_systems")
-public class OperatingSystem {
+public class OperatingSystem implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "operating_system_id")
@@ -23,7 +26,11 @@ public class OperatingSystem {
     private String operatingSystemName;
 
     @Column(name = "create_date")
-    private DateTime createDate;
+    private Date createDate;
+
+    public OperatingSystem() {
+        super();
+    }
 
     public String getOperatingSystemId() {
         return operatingSystemId;
@@ -41,11 +48,11 @@ public class OperatingSystem {
         this.operatingSystemName = operatingSystemName;
     }
 
-    public DateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(final DateTime createDate) {
+    public void setCreateDate(final Date createDate) {
         this.createDate = createDate;
     }
 
