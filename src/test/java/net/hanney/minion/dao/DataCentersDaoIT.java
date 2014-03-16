@@ -13,10 +13,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @author hanney
+ * Integrations tests for the {@link net.hanney.minion.dao.DataCentersDao} that
+ * connect to a real database (running on localhost).
+ *
+ * @author justin.hanney
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/test-context.xml", "/dao-config.xml"})
+@ContextConfiguration(locations = {"/test-context-localhost.xml"})
 public class DataCentersDaoIT {
 
     @Autowired
@@ -26,13 +29,12 @@ public class DataCentersDaoIT {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void testCreateDataCenter() {
         final DataCenter dataCenter = new DataCenter();
-        dataCenter.setDataCenterId("SEA");
-        dataCenter.setDataCenterName("Seattle Data Center");
+        dataCenter.setDataCenterId("TESTDC");
+        dataCenter.setDataCenterName("Test Data Center");
         dataCenter.setCreateDate(new DateTime(DateTimeZone.UTC).toDate());
 
-        dataCentersDao.createDataCenter(dataCenter);
-        dataCentersDao.deleteDataCenter(dataCenter);
+        dataCentersDao.insert(dataCenter);
+        dataCentersDao.delete(dataCenter);
     }
-
 
 }

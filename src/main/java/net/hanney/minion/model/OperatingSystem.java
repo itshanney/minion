@@ -3,15 +3,26 @@ package net.hanney.minion.model;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joda.time.DateTime;
 
+import javax.persistence.*;
+
 /**
  * Model that defines an Operating System which may run on a particular Server
  *
  * @author justin.hanney
  */
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "operating_systems")
 public class OperatingSystem {
 
+    @Id
+    @Column(name = "operating_system_id")
     private String operatingSystemId;
+
+    @Column(name = "operating_system_name")
     private String operatingSystemName;
+
+    @Column(name = "create_date")
     private DateTime createDate;
 
     public String getOperatingSystemId() {
@@ -46,4 +57,5 @@ public class OperatingSystem {
                 .append("createDate", getCreateDate())
                 .toString();
     }
+
 }
