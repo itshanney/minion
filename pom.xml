@@ -23,6 +23,7 @@
         <log4j.version>1.2.16</log4j.version>
         <mockito.version>1.9.5</mockito.version>
         <mysql.version>5.1.22</mysql.version>
+        <slf4j.version>1.7.6</slf4j.version>
         <spring.version>3.2.0.RELEASE</spring.version>
     </properties>
 
@@ -42,6 +43,17 @@
                     <driver>com.mysql.jdbc.Driver</driver>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <server>localhost.tomcat</server>
+                    <url>${localhost.tomcat.url}</url>
+                    <path>${minion.tomcat.path}</path>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
    
@@ -56,6 +68,16 @@
             <groupId>com.googlecode.flyway</groupId>
             <artifactId>flyway-maven-plugin</artifactId>
             <version>${flyway.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-nop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -80,6 +102,23 @@
             <version>${commons-lang.version}</version>
         </dependency>
 
+        <!-- Logging Dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
         <!-- Spring Dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -90,6 +129,12 @@
           <groupId>org.springframework</groupId>
           <artifactId>spring-context</artifactId>
           <version>${spring.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>commons-logging</groupId>
+                  <artifactId>commons-logging</artifactId>
+              </exclusion>
+          </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -100,6 +145,24 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Minion Website Dependencies -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time-jsptags</artifactId>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
