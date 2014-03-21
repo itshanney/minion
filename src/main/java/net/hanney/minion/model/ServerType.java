@@ -25,9 +25,8 @@ public class ServerType implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "type_id")
-    private Long typeId;
+    @Column(name = "type_id", length = 16)
+    private String typeId;
 
     @Column(name = "type_name")
     private String typeName;
@@ -53,15 +52,18 @@ public class ServerType implements Serializable {
     @Column(name = "create_date")
     private Date createDate;
 
+    @Column(name = "is_active")
+    private Boolean isActive;
+
     public ServerType() {
         super();
     }
 
-    public Long getTypeId() {
+    public String getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(final Long typeId) {
+    public void setTypeId(final String typeId) {
         this.typeId = typeId;
     }
 
@@ -117,6 +119,14 @@ public class ServerType implements Serializable {
         return tcoDollars;
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(final Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public void setTcoDollars(final BigDecimal tcoDollars) {
         this.tcoDollars = tcoDollars;
     }
@@ -140,6 +150,8 @@ public class ServerType implements Serializable {
                 .append("ramGb", getRamGb())
                 .append("hddGb", getHddGb())
                 .append("tcoDollars", getTcoDollars())
+                .append("isActive", getIsActive())
+                .append("createDate", getCreateDate())
                 .toString();
     }
 

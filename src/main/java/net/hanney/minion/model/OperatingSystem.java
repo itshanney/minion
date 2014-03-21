@@ -25,6 +25,9 @@ public class OperatingSystem implements Serializable {
     @Column(name = "operating_system_name")
     private String operatingSystemName;
 
+    @Column(name = "is_active")
+    private Boolean isActive;
+
     @Column(name = "create_date")
     private Date createDate;
 
@@ -48,6 +51,14 @@ public class OperatingSystem implements Serializable {
         this.operatingSystemName = operatingSystemName;
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(final Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public Date getCreateDate() {
         return createDate;
     }
@@ -61,6 +72,7 @@ public class OperatingSystem implements Serializable {
         return new ToStringBuilder(this)
                 .append("operatingSystemId", getOperatingSystemId())
                 .append("operatingSystemName", getOperatingSystemName())
+                .append("isActive", getIsActive())
                 .append("createDate", getCreateDate())
                 .toString();
     }

@@ -25,6 +25,9 @@ public class DataCenter implements Serializable {
     @Column(name = "data_center_name")
     private String dataCenterName;
 
+    @Column(name = "is_active")
+    private Boolean isActive;
+
     @Column(name = "create_date")
     private Date createDate;
 
@@ -48,6 +51,14 @@ public class DataCenter implements Serializable {
         this.dataCenterName = dataCenterName;
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(final Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public Date getCreateDate() {
         return createDate;
     }
@@ -61,6 +72,7 @@ public class DataCenter implements Serializable {
         return new ToStringBuilder(this)
                 .append("dataCenterId", getDataCenterId())
                 .append("dataCenterName", getDataCenterName())
+                .append("isActive", getIsActive())
                 .append("createDate", getCreateDate())
                 .toString();
     }

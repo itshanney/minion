@@ -2,6 +2,8 @@ package net.hanney.minion.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -12,6 +14,8 @@ import java.io.Serializable;
  * @author justin.hanney
  */
 public class AbstractDao<T extends Serializable> {
+
+    static final Logger LOG = LoggerFactory.getLogger(AbstractDao.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -29,6 +33,7 @@ public class AbstractDao<T extends Serializable> {
      * @param model Object to insert
      */
     public void insert(final T model) {
+        LOG.debug("Inserting New Object: {}", model);
         getCurrentSession().save(model);
     }
 
@@ -37,6 +42,7 @@ public class AbstractDao<T extends Serializable> {
      * @param model Object to update
      */
     public void update(final T model) {
+        LOG.debug("Updating Object: {}", model);
         getCurrentSession().merge(model);
     }
 
