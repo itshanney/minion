@@ -1,6 +1,8 @@
 package net.hanney.minion.service;
 
+import net.hanney.minion.dao.DataCentersDao;
 import net.hanney.minion.dao.ServerTypesDao;
+import net.hanney.minion.model.DataCenter;
 import net.hanney.minion.model.ServerType;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -24,20 +26,42 @@ public class NimdaService {
     static final Logger LOG = LoggerFactory.getLogger(NimdaService.class);
 
     @Autowired
+    private DataCentersDao dataCentersDao;
+    @Autowired
     private ServerTypesDao serverTypesDao;
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void createDataCenter(final DataCenter dataCenter) {
+        dataCenter.setCreateDate(new DateTime().toDate());
+        dataCenter.setIsActive(Boolean.TRUE);
+        LOG.debug("Creating new Data Center: {}", dataCenter);
+        dataCentersDao.insert(dataCenter);
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createServerType(final ServerType serverType) {
         serverType.setCreateDate(new DateTime().toDate());
         serverType.setIsActive(Boolean.TRUE);
-        LOG.debug("Inserting new ServerType: {}", serverType);
+        LOG.debug("Creating new Server Type: {}", serverType);
         serverTypesDao.insert(serverType);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void editDataCenter(final DataCenter dataCenter) {
+        LOG.debug("Editing Data Center: {}", dataCenter);
+        dataCentersDao.update(dataCenter);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void editServerType(final ServerType serverType) {
-        LOG.debug("Editing ServerType: {}", serverType);
+        LOG.debug("Editing Server Type: {}", serverType);
         serverTypesDao.update(serverType);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<DataCenter> getActiveDataCenters() {
+        LOG.debug("Getting all Active Data Centers");
+        return dataCentersDao.selectActiveServerTypes();
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -46,9 +70,15 @@ public class NimdaService {
         return serverTypesDao.selectActiveServerTypes();
     }
 
+    @Transactional(propagation =  Propagation.REQUIRES_NEW)
+    public DataCenter getDataCenter(final String dataCenterId) {
+        LOG.debug("Getting Data Cetner with ID: {}", dataCenterId);
+        return dataCentersDao.selectDataCenterById(dataCenterId);
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public ServerType getServerType(final String typeId) {
-        LOG.debug("Getting ServerType with ID: {}", typeId);
+        LOG.debug("Getting Server Type with ID: {}", typeId);
         return serverTypesDao.selectServerTypeById(typeId);
     }
 

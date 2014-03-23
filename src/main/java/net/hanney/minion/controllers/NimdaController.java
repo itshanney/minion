@@ -1,5 +1,6 @@
 package net.hanney.minion.controllers;
 
+import net.hanney.minion.model.DataCenter;
 import net.hanney.minion.model.ServerType;
 import net.hanney.minion.service.NimdaService;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -26,6 +27,8 @@ import java.util.List;
 public class NimdaController {
 
     static final String VIEW_VARIABLE_CURRENT_NAVBAR_ITEM       = "currentNavbarItem";
+    static final String VIEW_VARIABLE_DATA_CENTER               = "dataCenter";
+    static final String VIEW_VARIABLE_DATA_CENTERS              = "dataCenters";
     static final String VIEW_VARIABLE_SERVER_TYPE               = "serverType";
     static final String VIEW_VARIABLE_SERVER_TYPES              = "serverTypes";
 
@@ -34,9 +37,25 @@ public class NimdaController {
     static final String FORM_VARIABLE_CPU_CORES                 = "cpuCores";
     static final String FORM_VARIABLE_RAM_GB                    = "ramGb";
     static final String FORM_VARIABLE_HDD_GB                    = "hddGb";
+    static final String FORM_VARIABLE_DATA_CENTER_ID            = "dataCenterId";
+    static final String FORM_VARIABLE_DATA_CENTER_NAME          = "dataCenterName";
 
     @Autowired
     private NimdaService nimdaService;
+
+    @RequestMapping(value = "/dc/create", method = RequestMethod.POST)
+    public ModelAndView createDataCenter(final HttpServletRequest request) {
+        final String dataCenterId   = request.getParameter(FORM_VARIABLE_DATA_CENTER_ID);
+        final String dataCenterName = request.getParameter(FORM_VARIABLE_DATA_CENTER_NAME);
+
+        final DataCenter dataCenter = new DataCenter();
+        dataCenter.setDataCenterId(dataCenterId);
+        dataCenter.setDataCenterName(dataCenterName);
+
+        nimdaService.createDataCenter(dataCenter);
+
+        return showDataCenters();
+    }
 
     @RequestMapping(value = "/type/create", method = RequestMethod.POST)
     public ModelAndView createServerType(final HttpServletRequest request) {
@@ -56,6 +75,19 @@ public class NimdaController {
         nimdaService.createServerType(serverType);
 
         return showServerTypes();
+    }
+
+    @RequestMapping(value = "/dc/update", method = RequestMethod.POST)
+    public ModelAndView editDataCenter(final HttpServletRequest request) {
+        final String dataCenterId   = request.getParameter(FORM_VARIABLE_DATA_CENTER_ID);
+        final String dataCenterName = request.getParameter(FORM_VARIABLE_DATA_CENTER_NAME);
+
+        final DataCenter dataCenter = nimdaService.getDataCenter(dataCenterId); 
+        dataCenter.setDataCenterName(dataCenterName);
+
+        nimdaService.editDataCenter(dataCenter);
+
+        return showDataCenters();
     }
 
     @RequestMapping(value = "/type/update", method = RequestMethod.POST)
@@ -87,6 +119,18 @@ public class NimdaController {
         return showServerTypes();
     }
 
+    @RequestMapping(value = "/dc/{dataCenterId}/edit", method = RequestMethod.GET)
+    public ModelAndView showEditDataCenter(final @PathVariable String dataCenterId) {
+        final ModelAndView mv = new ModelAndView("nimda/editDataCenter");
+        setCurrentNavbarItem(mv, NimdaNavbarItem.DATA_CENTERS);
+
+        // Load the actual ServerType to edit
+        final DataCenter dataCenter = nimdaService.getDataCenter(dataCenterId);
+        mv.addObject(VIEW_VARIABLE_DATA_CENTER, dataCenter);
+
+        return mv;
+    }
+
     @RequestMapping(value = "/type/{typeId}/edit", method = RequestMethod.GET)
     public ModelAndView showEditServerType(final @PathVariable String typeId) {
         final ModelAndView mv = new ModelAndView("nimda/editServerType");
@@ -99,10 +143,30 @@ public class NimdaController {
         return mv;
     }
 
+    @RequestMapping(value = "/dc/new", method = RequestMethod.GET)
+    public ModelAndView showNewDataCenter() {
+        final ModelAndView mv = new ModelAndView("nimda/newDataCenter");
+        setCurrentNavbarItem(mv, NimdaNavbarItem.DATA_CENTERS);
+
+        return mv;
+    }
+
     @RequestMapping(value = "/type/new", method = RequestMethod.GET)
     public ModelAndView showNewServerType() {
         final ModelAndView mv = new ModelAndView("nimda/newServerType");
         setCurrentNavbarItem(mv, NimdaNavbarItem.SERVER_TYPES);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/dc", method = RequestMethod.GET)
+    public ModelAndView showDataCenters() {
+        final ModelAndView mv = new ModelAndView("nimda/showDataCenters");
+        setCurrentNavbarItem(mv, NimdaNavbarItem.DATA_CENTERS);
+
+        // Load all of the active Data Centers
+        final List<DataCenter> dataCenters = nimdaService.getActiveDataCenters();
+        mv.addObject(VIEW_VARIABLE_DATA_CENTERS, dataCenters);
 
         return mv;
     }
