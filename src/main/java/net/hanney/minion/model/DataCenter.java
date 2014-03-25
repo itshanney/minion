@@ -19,7 +19,7 @@ public class DataCenter implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "data_center_id")
+    @Column(name = "data_center_id", length = 8)
     private String dataCenterId;
 
     @Column(name = "data_center_name")

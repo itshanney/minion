@@ -19,7 +19,7 @@ public class OperatingSystem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "operating_system_id")
+    @Column(name = "operating_system_id", length = 16)
     private String operatingSystemId;
 
     @Column(name = "operating_system_name")

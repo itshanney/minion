@@ -11,12 +11,6 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h2>Server Types</h2>
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 text-right">
                     <form class="form-horizontal" role="form" method="POST" action="/m/nimda/type/update">
                         <div class="form-group">

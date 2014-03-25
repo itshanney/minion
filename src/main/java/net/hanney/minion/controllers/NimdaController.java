@@ -1,6 +1,7 @@
 package net.hanney.minion.controllers;
 
 import net.hanney.minion.model.DataCenter;
+import net.hanney.minion.model.OperatingSystem;
 import net.hanney.minion.model.ServerType;
 import net.hanney.minion.service.NimdaService;
 import net.hanney.minion.service.ServersService;
@@ -32,6 +33,7 @@ public class NimdaController {
     static final String VIEW_VARIABLE_DATA_CENTERS              = "dataCenters";
     static final String VIEW_VARIABLE_SERVER_TYPE               = "serverType";
     static final String VIEW_VARIABLE_SERVER_TYPES              = "serverTypes";
+    static final String VIEW_VARIABLE_OPERATING_SYSTEMS         = "operatingSystems";
 
     static final String FORM_VARIABLE_TYPE_ID                   = "typeId";
     static final String FORM_VARIABLE_TYPE_NAME                 = "typeName";
@@ -40,6 +42,8 @@ public class NimdaController {
     static final String FORM_VARIABLE_HDD_GB                    = "hddGb";
     static final String FORM_VARIABLE_DATA_CENTER_ID            = "dataCenterId";
     static final String FORM_VARIABLE_DATA_CENTER_NAME          = "dataCenterName";
+    static final String FORM_VARIABLE_OS_ID                     = "operatingSystemId";
+    static final String FORM_VARIABLE_OS_NAME                   = "operatingSystemName";
 
     @Autowired
     private NimdaService nimdaService;
@@ -58,6 +62,20 @@ public class NimdaController {
         nimdaService.createDataCenter(dataCenter);
 
         return showDataCenters();
+    }
+
+    @RequestMapping(value = "/os/create", method = RequestMethod.POST)
+    public ModelAndView createOperatingSystem(final HttpServletRequest request) {
+        final String osId   = request.getParameter(FORM_VARIABLE_OS_ID);
+        final String osName = request.getParameter(FORM_VARIABLE_OS_NAME);
+
+        final OperatingSystem operatingSystem = new OperatingSystem();
+        operatingSystem.setOperatingSystemId(osId);
+        operatingSystem.setOperatingSystemName(osName);
+
+        serversService.createOperatingSystem(operatingSystem);
+
+        return showOperatingSystems();
     }
 
     @RequestMapping(value = "/type/create", method = RequestMethod.POST)
@@ -122,6 +140,18 @@ public class NimdaController {
         return showServerTypes();
     }
 
+    @RequestMapping(value = "/dc", method = RequestMethod.GET)
+    public ModelAndView showDataCenters() {
+        final ModelAndView mv = new ModelAndView("nimda/showDataCenters");
+        setCurrentNavbarItem(mv, NimdaNavbarItem.DATA_CENTERS);
+
+        // Load all of the active Data Centers
+        final List<DataCenter> dataCenters = nimdaService.getActiveDataCenters();
+        mv.addObject(VIEW_VARIABLE_DATA_CENTERS, dataCenters);
+
+        return mv;
+    }
+
     @RequestMapping(value = "/dc/{dataCenterId}/edit", method = RequestMethod.GET)
     public ModelAndView showEditDataCenter(final @PathVariable String dataCenterId) {
         final ModelAndView mv = new ModelAndView("nimda/editDataCenter");
@@ -154,6 +184,14 @@ public class NimdaController {
         return mv;
     }
 
+    @RequestMapping(value = "/os/new", method = RequestMethod.GET)
+    public ModelAndView showNewOperatingSystem() {
+        final ModelAndView mv = new ModelAndView("nimda/newOperatingSystem");
+        setCurrentNavbarItem(mv, NimdaNavbarItem.OPERATING_SYSTEMS);
+
+        return mv;
+    }
+
     @RequestMapping(value = "/type/new", method = RequestMethod.GET)
     public ModelAndView showNewServerType() {
         final ModelAndView mv = new ModelAndView("nimda/newServerType");
@@ -162,14 +200,14 @@ public class NimdaController {
         return mv;
     }
 
-    @RequestMapping(value = "/dc", method = RequestMethod.GET)
-    public ModelAndView showDataCenters() {
-        final ModelAndView mv = new ModelAndView("nimda/showDataCenters");
-        setCurrentNavbarItem(mv, NimdaNavbarItem.DATA_CENTERS);
+    @RequestMapping(value = "/os", method = RequestMethod.GET)
+    public ModelAndView showOperatingSystems() {
+        final ModelAndView mv = new ModelAndView("nimda/showOperatingSystems");
+        setCurrentNavbarItem(mv, NimdaNavbarItem.OPERATING_SYSTEMS);
 
-        // Load all of the active Data Centers
-        final List<DataCenter> dataCenters = nimdaService.getActiveDataCenters();
-        mv.addObject(VIEW_VARIABLE_DATA_CENTERS, dataCenters);
+        // Load all of the active Operating Systems
+        final List<OperatingSystem> operatingSystems = serversService.getOperatingSystems();
+        mv.addObject(VIEW_VARIABLE_OPERATING_SYSTEMS, operatingSystems);
 
         return mv;
     }
@@ -180,7 +218,7 @@ public class NimdaController {
         setCurrentNavbarItem(mv, NimdaNavbarItem.SERVER_TYPES);
 
         // Load all of the active Server Types
-        final List<ServerType> serverTypes = serversService.getActiveServerTypes();
+        final List<ServerType> serverTypes = serversService.getServerTypes();
         mv.addObject(VIEW_VARIABLE_SERVER_TYPES, serverTypes);
 
         return mv;
