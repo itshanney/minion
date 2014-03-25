@@ -3,6 +3,7 @@ package net.hanney.minion.controllers;
 import net.hanney.minion.model.DataCenter;
 import net.hanney.minion.model.ServerType;
 import net.hanney.minion.service.NimdaService;
+import net.hanney.minion.service.ServersService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,8 @@ public class NimdaController {
 
     @Autowired
     private NimdaService nimdaService;
+    @Autowired
+    private ServersService serversService;
 
     @RequestMapping(value = "/dc/create", method = RequestMethod.POST)
     public ModelAndView createDataCenter(final HttpServletRequest request) {
@@ -72,7 +75,7 @@ public class NimdaController {
         serverType.setRamGb(ramGb);
         serverType.setHddGb(hddGb);
 
-        nimdaService.createServerType(serverType);
+        serversService.createServerType(serverType);
 
         return showServerTypes();
     }
@@ -82,7 +85,7 @@ public class NimdaController {
         final String dataCenterId   = request.getParameter(FORM_VARIABLE_DATA_CENTER_ID);
         final String dataCenterName = request.getParameter(FORM_VARIABLE_DATA_CENTER_NAME);
 
-        final DataCenter dataCenter = nimdaService.getDataCenter(dataCenterId); 
+        final DataCenter dataCenter = nimdaService.getDataCenter(dataCenterId);
         dataCenter.setDataCenterName(dataCenterName);
 
         nimdaService.editDataCenter(dataCenter);
@@ -98,13 +101,13 @@ public class NimdaController {
         final BigDecimal ramGb = NumberUtils.createBigDecimal(request.getParameter(FORM_VARIABLE_RAM_GB));
         final BigDecimal hddGb = NumberUtils.createBigDecimal(request.getParameter(FORM_VARIABLE_HDD_GB));
 
-        final ServerType serverType = nimdaService.getServerType(typeId);
+        final ServerType serverType = serversService.getServerType(typeId);
         serverType.setTypeName(typeName);
         serverType.setCpuCores(cpuCores);
         serverType.setRamGb(ramGb);
         serverType.setHddGb(hddGb);
 
-        nimdaService.editServerType(serverType);
+        serversService.editServerType(serverType);
 
         return showServerTypes();
     }
@@ -137,7 +140,7 @@ public class NimdaController {
         setCurrentNavbarItem(mv, NimdaNavbarItem.SERVER_TYPES);
 
         // Load the actual ServerType to edit
-        final ServerType serverType = nimdaService.getServerType(typeId);
+        final ServerType serverType = serversService.getServerType(typeId);
         mv.addObject(VIEW_VARIABLE_SERVER_TYPE, serverType);
 
         return mv;
@@ -177,7 +180,7 @@ public class NimdaController {
         setCurrentNavbarItem(mv, NimdaNavbarItem.SERVER_TYPES);
 
         // Load all of the active Server Types
-        final List<ServerType> serverTypes = nimdaService.getActiveServerTypes();
+        final List<ServerType> serverTypes = serversService.getActiveServerTypes();
         mv.addObject(VIEW_VARIABLE_SERVER_TYPES, serverTypes);
 
         return mv;
