@@ -14,9 +14,9 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 text-right">
                     <form class="form-horizontal" role="form" method="POST" action="/m/nimda/type/create">
                         <div class="form-group">
-                            <label for="typeId" class="col-sm-3 control-label">Type ID</label>
+                            <label for="typeCode" class="col-sm-3 control-label">Type Code</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="typeId" name="typeId" maxlength="16">
+                                <input type="text" class="form-control" id="typeCode" name="typeCode" maxlength="16">
                             </div>
                         </div>
                         <div class="form-group">

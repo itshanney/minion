@@ -25,8 +25,12 @@ public class ServerType implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "type_id", length = 16)
-    private String typeId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "type_id")
+    private Integer typeId;
+
+    @Column(name = "type_code", length = 16)
+    private String typeCode;
 
     @Column(name = "type_name")
     private String typeName;
@@ -59,12 +63,20 @@ public class ServerType implements Serializable {
         super();
     }
 
-    public String getTypeId() {
+    public Integer getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(final String typeId) {
+    public void setTypeId(final Integer typeId) {
         this.typeId = typeId;
+    }
+
+    public String getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(final String typeCode) {
+        this.typeCode = typeCode;
     }
 
     public String getTypeName() {
@@ -143,6 +155,7 @@ public class ServerType implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("typeId", getTypeId())
+                .append("typeCode", getTypeCode())
                 .append("typeName", getTypeName())
                 .append("description", getDescription())
                 .append("cpuType", getCpuType())

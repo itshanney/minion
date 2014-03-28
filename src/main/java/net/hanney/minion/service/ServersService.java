@@ -65,7 +65,7 @@ public class ServersService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public ServerType getServerType(final String typeId) {
+    public ServerType getServerType(final Integer typeId) {
         LOG.debug("Getting Server Type with ID: {}", typeId);
         return serverTypesDao.selectServerTypeById(typeId);
     }

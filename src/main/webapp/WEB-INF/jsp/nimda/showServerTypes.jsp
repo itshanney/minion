@@ -26,7 +26,7 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Type ID</th>
+                                <th>Type Code</th>
                                 <th>Type Name</th>
                                 <th>Cores</th>
                                 <th>RAM (GB)</th>
@@ -36,7 +36,7 @@
                         <tbody>
                         <c:forEach var="type" items="${serverTypes}">
                             <tr>
-                                <td><a href="/m/nimda/type/${type.typeId}/edit">${type.typeId}</a></td>
+                                <td><a href="/m/nimda/type/${type.typeId}/edit">${type.typeCode}</a></td>
                                 <td>${type.typeName}</td>
                                 <td>${type.cpuCores}</td>
                                 <td>${type.ramGb}</td>

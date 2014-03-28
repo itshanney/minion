@@ -36,6 +36,7 @@ public class NimdaController {
     static final String VIEW_VARIABLE_OPERATING_SYSTEMS         = "operatingSystems";
 
     static final String FORM_VARIABLE_TYPE_ID                   = "typeId";
+    static final String FORM_VARIABLE_TYPE_CODE                 = "typeCode";
     static final String FORM_VARIABLE_TYPE_NAME                 = "typeName";
     static final String FORM_VARIABLE_CPU_CORES                 = "cpuCores";
     static final String FORM_VARIABLE_RAM_GB                    = "ramGb";
@@ -80,14 +81,14 @@ public class NimdaController {
 
     @RequestMapping(value = "/type/create", method = RequestMethod.POST)
     public ModelAndView createServerType(final HttpServletRequest request) {
-        final String typeId    = request.getParameter(FORM_VARIABLE_TYPE_ID);
+        final String typeCode  = request.getParameter(FORM_VARIABLE_TYPE_CODE);
         final String typeName  = request.getParameter(FORM_VARIABLE_TYPE_NAME);
         final Integer cpuCores = NumberUtils.createInteger(request.getParameter(FORM_VARIABLE_CPU_CORES));
         final BigDecimal ramGb = NumberUtils.createBigDecimal(request.getParameter(FORM_VARIABLE_RAM_GB));
         final BigDecimal hddGb = NumberUtils.createBigDecimal(request.getParameter(FORM_VARIABLE_HDD_GB));
 
         final ServerType serverType = new ServerType();
-        serverType.setTypeId(typeId);
+        serverType.setTypeCode(typeCode);
         serverType.setTypeName(typeName);
         serverType.setCpuCores(cpuCores);
         serverType.setRamGb(ramGb);
@@ -113,13 +114,15 @@ public class NimdaController {
 
     @RequestMapping(value = "/type/update", method = RequestMethod.POST)
     public ModelAndView editServerType(final HttpServletRequest request) {
-        final String typeId    = request.getParameter(FORM_VARIABLE_TYPE_ID);
+        final Integer typeId   = NumberUtils.createInteger(request.getParameter(FORM_VARIABLE_TYPE_ID));
+        final String typeCode  = request.getParameter(FORM_VARIABLE_TYPE_CODE);
         final String typeName  = request.getParameter(FORM_VARIABLE_TYPE_NAME);
         final Integer cpuCores = NumberUtils.createInteger(request.getParameter(FORM_VARIABLE_CPU_CORES));
         final BigDecimal ramGb = NumberUtils.createBigDecimal(request.getParameter(FORM_VARIABLE_RAM_GB));
         final BigDecimal hddGb = NumberUtils.createBigDecimal(request.getParameter(FORM_VARIABLE_HDD_GB));
 
         final ServerType serverType = serversService.getServerType(typeId);
+        serverType.setTypeCode(typeCode);
         serverType.setTypeName(typeName);
         serverType.setCpuCores(cpuCores);
         serverType.setRamGb(ramGb);
@@ -165,7 +168,7 @@ public class NimdaController {
     }
 
     @RequestMapping(value = "/type/{typeId}/edit", method = RequestMethod.GET)
-    public ModelAndView showEditServerType(final @PathVariable String typeId) {
+    public ModelAndView showEditServerType(final @PathVariable Integer typeId) {
         final ModelAndView mv = new ModelAndView("nimda/editServerType");
         setCurrentNavbarItem(mv, NimdaNavbarItem.SERVER_TYPES);
 

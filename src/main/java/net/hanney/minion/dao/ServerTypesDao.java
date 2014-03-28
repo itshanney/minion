@@ -19,7 +19,7 @@ public class ServerTypesDao extends AbstractDao<ServerType> {
 
     static final Logger LOG = LoggerFactory.getLogger(ServerTypesDao.class);
 
-    public ServerType selectServerTypeById(final String typeId) {
+    public ServerType selectServerTypeById(final Integer typeId) {
         LOG.debug("Selecting ServerType by ID: {}",  typeId);
         return (ServerType) getCurrentSession().get(ServerType.class, typeId);
     }
