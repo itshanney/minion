@@ -1,7 +1,9 @@
 package net.hanney.minion.controllers;
 
 /**
- * @author hanney
+ * Enum that contains all of the navigation sub-elements in the Nimda section
+ *
+ * @author justin.hanney
  */
 public enum NimdaNavbarItem {
     SERVER_TYPES("Server Types", "/m/nimda/types"),

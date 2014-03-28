@@ -1,4 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Navigation Bar -->
+<script type="text/javascript">
+    var selected = '#${selectedNavbarItem.name()}';
+    $(document).ready(function() {
+        $(selected.toLowerCase()).addClass('active');
+    });
+</script>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -7,18 +14,13 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li id="servers">
-                    <a href="#">
+                    <a href="/m/servers">
                         <span class="glyphicon glyphicon-hdd"></span> Servers
                     </a>
                 </li>
-                <li id="nimda" class="active">
-                    <a href="#">
+                <li id="nimda">
+                    <a href="/m/nimda">
                         <span class="glyphicon glyphicon-wrench"></span> Nimda
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <i class="glyphicon glyphicon-question-sign"></i> Help
                     </a>
                 </li>
                 <li class="divider-vertical"></li>
