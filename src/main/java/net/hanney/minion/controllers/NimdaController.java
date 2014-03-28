@@ -41,7 +41,6 @@ public class NimdaController extends AbstractController {
     static final String FORM_VARIABLE_HDD_GB                    = "hddGb";
     static final String FORM_VARIABLE_DATA_CENTER_ID            = "dataCenterId";
     static final String FORM_VARIABLE_DATA_CENTER_NAME          = "dataCenterName";
-    static final String FORM_VARIABLE_OS_ID                     = "operatingSystemId";
     static final String FORM_VARIABLE_OS_NAME                   = "operatingSystemName";
 
     @Autowired

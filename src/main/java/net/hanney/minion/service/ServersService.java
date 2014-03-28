@@ -2,7 +2,9 @@ package net.hanney.minion.service;
 
 import net.hanney.minion.dao.OperatingSystemsDao;
 import net.hanney.minion.dao.ServerTypesDao;
+import net.hanney.minion.dao.ServersDao;
 import net.hanney.minion.model.OperatingSystem;
+import net.hanney.minion.model.Server;
 import net.hanney.minion.model.ServerType;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -27,6 +29,8 @@ public class ServersService {
 
     @Autowired
     private OperatingSystemsDao operatingSystemsDao;
+    @Autowired
+    private ServersDao serversDao;
     @Autowired
     private ServerTypesDao serverTypesDao;
 
@@ -56,6 +60,12 @@ public class ServersService {
     public List<OperatingSystem> getOperatingSystems() {
         LOG.debug("Getting all Operating Systems");
         return operatingSystemsDao.selectActiveOperatingSystems();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<Server> getServers() {
+        LOG.debug("Getting all Servers");
+        return serversDao.selectActiveServers();
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
