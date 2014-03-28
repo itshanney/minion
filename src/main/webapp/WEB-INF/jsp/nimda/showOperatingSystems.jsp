@@ -26,14 +26,12 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Operating System ID</th>
                             <th>Operating System Name</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="os" items="${operatingSystems}">
                             <tr>
-                                <td><a href="/m/nimda/os/${os.operatingSystemId}/edit">${os.operatingSystemId}</a></td>
                                 <td>${os.operatingSystemName}</td>
                             </tr>
                         </c:forEach>

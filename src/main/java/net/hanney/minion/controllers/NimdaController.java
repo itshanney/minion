@@ -67,11 +67,9 @@ public class NimdaController {
 
     @RequestMapping(value = "/os/create", method = RequestMethod.POST)
     public ModelAndView createOperatingSystem(final HttpServletRequest request) {
-        final String osId   = request.getParameter(FORM_VARIABLE_OS_ID);
         final String osName = request.getParameter(FORM_VARIABLE_OS_NAME);
 
         final OperatingSystem operatingSystem = new OperatingSystem();
-        operatingSystem.setOperatingSystemId(osId);
         operatingSystem.setOperatingSystemName(osName);
 
         serversService.createOperatingSystem(operatingSystem);

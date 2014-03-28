@@ -14,12 +14,6 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 text-right">
                     <form class="form-horizontal" role="form" method="POST" action="/m/nimda/os/create">
                         <div class="form-group">
-                            <label for="operatingSystemId" class="col-sm-3 control-label">Operating System ID</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="operatingSystemId" name="operatingSystemId" maxlength="16">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="operatingSystemName" class="col-sm-3 control-label">Operating System Name</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="operatingSystemName" name="operatingSystemName">

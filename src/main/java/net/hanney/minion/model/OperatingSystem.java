@@ -19,8 +19,9 @@ public class OperatingSystem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "operating_system_id", length = 16)
-    private String operatingSystemId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "operating_system_id")
+    private Integer operatingSystemId;
 
     @Column(name = "operating_system_name")
     private String operatingSystemName;
@@ -35,11 +36,11 @@ public class OperatingSystem implements Serializable {
         super();
     }
 
-    public String getOperatingSystemId() {
+    public Integer getOperatingSystemId() {
         return operatingSystemId;
     }
 
-    public void setOperatingSystemId(final String operatingSystemId) {
+    public void setOperatingSystemId(final Integer operatingSystemId) {
         this.operatingSystemId = operatingSystemId;
     }
 

@@ -19,7 +19,7 @@ public class OperatingSystemsDao extends AbstractDao<OperatingSystem> {
 
     static final Logger LOG = LoggerFactory.getLogger(OperatingSystemsDao.class);
 
-    public OperatingSystem selectOperatingSystemById(final String operatingSystemId) {
+    public OperatingSystem selectOperatingSystemById(final Integer operatingSystemId) {
         LOG.debug("Selecting OperatingSystem by ID: {}",  operatingSystemId);
         return (OperatingSystem) getCurrentSession().get(OperatingSystem.class, operatingSystemId);
     }

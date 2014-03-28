@@ -28,7 +28,6 @@ public class OperatingSystemsDaoIT {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void testInsert() {
         final OperatingSystem operatingSystem = new OperatingSystem();
-        operatingSystem.setOperatingSystemId("ub.12.04.lts");
         operatingSystem.setOperatingSystemName("Ubuntu 12.04 LTS");
         operatingSystem.setCreateDate(new DateTime(DateTimeZone.UTC).toDate());
 
