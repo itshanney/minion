@@ -43,6 +43,14 @@ public class ServersService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void createServer(final Server server) {
+        server.setCreateDate(new DateTime().toDate());
+        server.setIsActive(Boolean.TRUE);
+        LOG.debug("Creating new Server: {}", server);
+        serversDao.insert(server);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createServerType(final ServerType serverType) {
         serverType.setCreateDate(new DateTime().toDate());
         serverType.setIsActive(Boolean.TRUE);

@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 text-right">
                     <p>
-                        <a href="<spring:url value="/m/nimda/dc/new"/>" class="btn btn-success">
+                        <a href="<spring:url value="/m/servers/new"/>" class="btn btn-success">
                         <span class="glyphicon glyphicon-plus"></span>
                         New Server
                         </a>
