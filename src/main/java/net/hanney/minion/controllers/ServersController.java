@@ -4,7 +4,7 @@ import net.hanney.minion.model.DataCenter;
 import net.hanney.minion.model.OperatingSystem;
 import net.hanney.minion.model.Server;
 import net.hanney.minion.model.ServerType;
-import net.hanney.minion.service.NimdaService;
+import net.hanney.minion.service.NetworkService;
 import net.hanney.minion.service.ServersService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class ServersController extends AbstractController {
     static final String FORM_VARIABLE_HOSTNAME                  = "hostname";
 
     @Autowired
-    private NimdaService nimdaService;
+    private NetworkService networkService;
     @Autowired
     private ServersService serversService;
 
@@ -78,7 +78,7 @@ public class ServersController extends AbstractController {
         final List<ServerType> serverTypes = serversService.getServerTypes();
         mv.addObject(VIEW_VARIABLE_SERVER_TYPES, serverTypes);
 
-        final List<DataCenter> dataCenters = nimdaService.getActiveDataCenters();
+        final List<DataCenter> dataCenters = networkService.getActiveDataCenters();
         mv.addObject(VIEW_VARIABLE_DATA_CENTERS, dataCenters);
 
         return mv;

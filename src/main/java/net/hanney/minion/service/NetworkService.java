@@ -13,15 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Service that encapsulates the primary business logic behind all of the configuration
- * aspects of Minion, including Server Types, Data Centers, etc.
+ * Service that encapsulates the primary business logic behind all of the
+ * networking-related aspects of server management.
  *
  * @author justin.hanney
  */
 @Service
-public class NimdaService {
+public class NetworkService {
 
-    static final Logger LOG = LoggerFactory.getLogger(NimdaService.class);
+    static final Logger LOG = LoggerFactory.getLogger(NetworkService.class);
 
     @Autowired
     private DataCentersDao dataCentersDao;

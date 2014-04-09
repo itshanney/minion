@@ -3,7 +3,7 @@ package net.hanney.minion.controllers;
 import net.hanney.minion.model.DataCenter;
 import net.hanney.minion.model.OperatingSystem;
 import net.hanney.minion.model.ServerType;
-import net.hanney.minion.service.NimdaService;
+import net.hanney.minion.service.NetworkService;
 import net.hanney.minion.service.ServersService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class NimdaController extends AbstractController {
     static final String FORM_VARIABLE_OS_NAME                   = "operatingSystemName";
 
     @Autowired
-    private NimdaService nimdaService;
+    private NetworkService networkService;
     @Autowired
     private ServersService serversService;
 
@@ -57,7 +57,7 @@ public class NimdaController extends AbstractController {
         dataCenter.setDataCenterId(dataCenterId);
         dataCenter.setDataCenterName(dataCenterName);
 
-        nimdaService.createDataCenter(dataCenter);
+        networkService.createDataCenter(dataCenter);
 
         return showDataCenters();
     }
@@ -99,10 +99,10 @@ public class NimdaController extends AbstractController {
         final String dataCenterId   = request.getParameter(FORM_VARIABLE_DATA_CENTER_ID);
         final String dataCenterName = request.getParameter(FORM_VARIABLE_DATA_CENTER_NAME);
 
-        final DataCenter dataCenter = nimdaService.getDataCenter(dataCenterId);
+        final DataCenter dataCenter = networkService.getDataCenter(dataCenterId);
         dataCenter.setDataCenterName(dataCenterName);
 
-        nimdaService.editDataCenter(dataCenter);
+        networkService.editDataCenter(dataCenter);
 
         return showDataCenters();
     }
@@ -144,7 +144,7 @@ public class NimdaController extends AbstractController {
         setCurrentNavbarItem(mv, NimdaNavbarItem.DATA_CENTERS);
 
         // Load all of the active Data Centers
-        final List<DataCenter> dataCenters = nimdaService.getActiveDataCenters();
+        final List<DataCenter> dataCenters = networkService.getActiveDataCenters();
         mv.addObject(VIEW_VARIABLE_DATA_CENTERS, dataCenters);
 
         return mv;
@@ -156,7 +156,7 @@ public class NimdaController extends AbstractController {
         setCurrentNavbarItem(mv, NimdaNavbarItem.DATA_CENTERS);
 
         // Load the actual ServerType to edit
-        final DataCenter dataCenter = nimdaService.getDataCenter(dataCenterId);
+        final DataCenter dataCenter = networkService.getDataCenter(dataCenterId);
         mv.addObject(VIEW_VARIABLE_DATA_CENTER, dataCenter);
 
         return mv;
