@@ -29,8 +29,16 @@ public class Server implements Serializable {
     @Column(name = "server_type_id")
     private Integer serverTypeId;
 
+    @JoinColumn(name = "server_type_id", updatable = false, insertable = false)
+    @OneToOne(targetEntity = ServerType.class, fetch = FetchType.EAGER)
+    private ServerType serverType;
+
     @Column(name = "operating_system_id")
     private Integer operatingSystemId;
+
+    @JoinColumn(name = "operating_system_id", updatable = false, insertable = false)
+    @OneToOne(targetEntity = OperatingSystem.class, fetch = FetchType.EAGER)
+    private OperatingSystem operatingSystem;
 
     @Column(name = "data_center_id")
     private String dataCenterId;
@@ -57,6 +65,14 @@ public class Server implements Serializable {
         this.hostname = hostname;
     }
 
+    public OperatingSystem getOperatingSystem() {
+        return operatingSystem;
+    }
+
+    public void setOperatingSystem(final OperatingSystem operatingSystem) {
+        this.operatingSystem = operatingSystem;
+    }
+
     public Integer getOperatingSystemId() {
         return operatingSystemId;
     }
@@ -71,6 +87,14 @@ public class Server implements Serializable {
 
     public void setServerId(final Long serverId) {
         this.serverId = serverId;
+    }
+
+    public ServerType getServerType() {
+        return serverType;
+    }
+
+    public void setServerType(final ServerType serverType) {
+        this.serverType = serverType;
     }
 
     public Integer getServerTypeId() {
