@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author justin.hanney
  */
-@Repository(value = "operatingSystemsDao")
+@Repository("operatingSystemsDao")
 public class OperatingSystemsDao extends AbstractDao<OperatingSystem> {
 
     static final Logger LOG = LoggerFactory.getLogger(OperatingSystemsDao.class);

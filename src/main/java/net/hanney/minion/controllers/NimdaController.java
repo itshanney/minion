@@ -1,6 +1,7 @@
 package net.hanney.minion.controllers;
 
 import net.hanney.minion.model.DataCenter;
+import net.hanney.minion.model.Domain;
 import net.hanney.minion.model.OperatingSystem;
 import net.hanney.minion.model.ServerType;
 import net.hanney.minion.service.NetworkService;
@@ -32,6 +33,7 @@ public class NimdaController extends AbstractController {
     static final String VIEW_VARIABLE_SERVER_TYPE               = "serverType";
     static final String VIEW_VARIABLE_SERVER_TYPES              = "serverTypes";
     static final String VIEW_VARIABLE_OPERATING_SYSTEMS         = "operatingSystems";
+    static final String VIEW_VARIABLE_DOMAINS                   = "domains";
 
     static final String FORM_VARIABLE_TYPE_ID                   = "typeId";
     static final String FORM_VARIABLE_TYPE_CODE                 = "typeCode";
@@ -42,6 +44,7 @@ public class NimdaController extends AbstractController {
     static final String FORM_VARIABLE_DATA_CENTER_ID            = "dataCenterId";
     static final String FORM_VARIABLE_DATA_CENTER_NAME          = "dataCenterName";
     static final String FORM_VARIABLE_OS_NAME                   = "operatingSystemName";
+    static final String FORM_VARIABLE_DOMAIN_NAME               = "domainName";
 
     @Autowired
     private NetworkService networkService;
@@ -60,6 +63,18 @@ public class NimdaController extends AbstractController {
         networkService.createDataCenter(dataCenter);
 
         return showDataCenters();
+    }
+
+    @RequestMapping(value = "/domain/create", method = RequestMethod.POST)
+    public ModelAndView createDomain(final HttpServletRequest request) {
+        final String domainName = request.getParameter(FORM_VARIABLE_DOMAIN_NAME);
+
+        final Domain domain = new Domain();
+        domain.setDomainName(domainName);
+
+        networkService.createDomain(domain);
+
+        return showDomains();
     }
 
     @RequestMapping(value = "/os/create", method = RequestMethod.POST)
@@ -150,6 +165,18 @@ public class NimdaController extends AbstractController {
         return mv;
     }
 
+    @RequestMapping(value = "/domains", method = RequestMethod.GET)
+    public ModelAndView showDomains() {
+        final ModelAndView mv = new ModelAndView("nimda/showDomains");
+        setCurrentNavbarItem(mv, NimdaNavbarItem.DOMAINS);
+
+        // Load all of the active Domains
+        final List<Domain> domains = networkService.getActiveDomains();
+        mv.addObject(VIEW_VARIABLE_DOMAINS, domains);
+
+        return mv;
+    }
+
     @RequestMapping(value = "/dc/{dataCenterId}/edit", method = RequestMethod.GET)
     public ModelAndView showEditDataCenter(final @PathVariable String dataCenterId) {
         final ModelAndView mv = new ModelAndView("nimda/editDataCenter");
@@ -178,6 +205,14 @@ public class NimdaController extends AbstractController {
     public ModelAndView showNewDataCenter() {
         final ModelAndView mv = new ModelAndView("nimda/newDataCenter");
         setCurrentNavbarItem(mv, NimdaNavbarItem.DATA_CENTERS);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/domain/new", method = RequestMethod.GET)
+    public ModelAndView showNewDomain() {
+        final ModelAndView mv = new ModelAndView("nimda/newDomain");
+        setCurrentNavbarItem(mv, NimdaNavbarItem.DOMAINS);
 
         return mv;
     }

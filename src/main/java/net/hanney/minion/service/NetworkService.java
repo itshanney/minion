@@ -1,7 +1,9 @@
 package net.hanney.minion.service;
 
 import net.hanney.minion.dao.DataCentersDao;
+import net.hanney.minion.dao.DomainsDao;
 import net.hanney.minion.model.DataCenter;
+import net.hanney.minion.model.Domain;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,8 @@ public class NetworkService {
 
     @Autowired
     private DataCentersDao dataCentersDao;
+    @Autowired
+    private DomainsDao domainsDao;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createDataCenter(final DataCenter dataCenter) {
@@ -32,6 +36,14 @@ public class NetworkService {
         dataCenter.setIsActive(Boolean.TRUE);
         LOG.debug("Creating new Data Center: {}", dataCenter);
         dataCentersDao.insert(dataCenter);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void createDomain(final Domain domain) {
+        domain.setCreateDate(new DateTime().toDate());
+        domain.setIsActive(Boolean.TRUE);
+        LOG.debug("Creating new Domain: {}", domain);
+        domainsDao.insert(domain);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -44,6 +56,12 @@ public class NetworkService {
     public List<DataCenter> getActiveDataCenters() {
         LOG.debug("Getting all Active Data Centers");
         return dataCentersDao.selectActiveServerTypes();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<Domain> getActiveDomains() {
+        LOG.debug("Getting all Active Domains");
+        return domainsDao.selectActiveDomains();
     }
 
     @Transactional(propagation =  Propagation.REQUIRES_NEW)

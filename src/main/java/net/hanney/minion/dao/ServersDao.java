@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author justin.hanney
  */
-@Repository(value = "serversDao")
+@Repository("serversDao")
 public class ServersDao extends AbstractDao<Server> {
 
     static final Logger LOG = LoggerFactory.getLogger(ServersDao.class);

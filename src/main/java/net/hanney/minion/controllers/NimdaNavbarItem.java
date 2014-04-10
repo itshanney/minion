@@ -8,7 +8,8 @@ package net.hanney.minion.controllers;
 public enum NimdaNavbarItem {
     SERVER_TYPES("Server Types", "/m/nimda/types"),
     OPERATING_SYSTEMS("Operating Systems", "/m/nimda/os"),
-    DATA_CENTERS("Data Centers", "/m/nimda/dc");
+    DATA_CENTERS("Data Centers", "/m/nimda/dc"),
+    DOMAINS("Domains", "/m/nimda/domains");
 
     private NimdaNavbarItem(final String itemName, final String itemLink) {
         this.itemName = itemName;
