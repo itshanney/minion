@@ -1,7 +1,9 @@
 package net.hanney.minion.service;
 
+import net.hanney.minion.dao.SslCertificatesDao;
 import net.hanney.minion.dao.DataCentersDao;
 import net.hanney.minion.dao.DomainsDao;
+import net.hanney.minion.model.SslCertificate;
 import net.hanney.minion.model.DataCenter;
 import net.hanney.minion.model.Domain;
 import org.joda.time.DateTime;
@@ -26,6 +28,8 @@ public class NetworkService {
     static final Logger LOG = LoggerFactory.getLogger(NetworkService.class);
 
     @Autowired
+    private SslCertificatesDao sslCertificatesDao;
+    @Autowired
     private DataCentersDao dataCentersDao;
     @Autowired
     private DomainsDao domainsDao;
@@ -47,9 +51,23 @@ public class NetworkService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void createSslCertificate(final SslCertificate certificate) {
+        certificate.setCreateDate(new DateTime().toDate());
+        certificate.setIsActive(Boolean.TRUE);
+        LOG.debug("Creating new SSL Certificate: {}", certificate);
+        sslCertificatesDao.insert(certificate);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void editDataCenter(final DataCenter dataCenter) {
         LOG.debug("Editing Data Center: {}", dataCenter);
         dataCentersDao.update(dataCenter);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<SslCertificate> getActiveCertificates() {
+        LOG.debug("Getting all Active Certificates");
+        return sslCertificatesDao.selectActiveCertificates();
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

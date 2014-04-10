@@ -18,6 +18,11 @@
                         <span class="glyphicon glyphicon-hdd"></span> Servers
                     </a>
                 </li>
+                <li id="network">
+                    <a href="/m/network">
+                        <span class="glyphicon glyphicon-random"></span> Network
+                    </a>
+                </li>
                 <li id="nimda">
                     <a href="/m/nimda">
                         <span class="glyphicon glyphicon-wrench"></span> Nimda

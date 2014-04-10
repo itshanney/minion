@@ -1,16 +1,15 @@
 package net.hanney.minion.controllers;
 
 /**
- * Enum that contains all of the Navbar elements for navigation
+ * Enum that contains all of the navigation sub-elements in the Network section
  *
  * @author justin.hanney
  */
-public enum NavbarItem {
-    SERVERS("Servers", "/m/servers"),
-    NETWORK("Network", "/m/network"),
-    NIMDA("Nimda", "/m/nimda");
+public enum NetworkNavbarItem {
 
-    private NavbarItem(final String itemName, final String itemLink) {
+    SSL_CERTIFICATES("SSL Certificates", "/m/network/certs");
+
+    private NetworkNavbarItem(final String itemName, final String itemLink) {
         this.itemName = itemName;
         this.itemLink = itemLink;
     }

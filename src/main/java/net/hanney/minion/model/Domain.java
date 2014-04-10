@@ -65,6 +65,7 @@ public class Domain implements Serializable {
         this.isActive = isActive;
     }
 
+    @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("domainId", getDomainId())

@@ -12,11 +12,6 @@ import java.util.List;
  */
 public abstract class AbstractController {
 
-    @ModelAttribute(value = "nimdaNavbarItems")
-    public List<NimdaNavbarItem> getNimdaNavbarItems() {
-        return Arrays.asList(NimdaNavbarItem.values());
-    }
-
     @ModelAttribute(value = "navbarItems")
     public List<NavbarItem> getNavbarItems() {
         return Arrays.asList(NavbarItem.values());

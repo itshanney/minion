@@ -9,6 +9,7 @@ import net.hanney.minion.service.ServersService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -141,6 +143,11 @@ public class NimdaController extends AbstractController {
         serversService.editServerType(serverType);
 
         return showServerTypes();
+    }
+
+    @ModelAttribute(value = "nimdaNavbarItems")
+    public List<NimdaNavbarItem> getNimdaNavbarItems() {
+        return Arrays.asList(NimdaNavbarItem.values());
     }
 
     @Override
