@@ -4,11 +4,7 @@
 
     <div class="row">
 
-        <div class="col-sm-3 col-md-2 sidebar">
-            <jsp:include page="/WEB-INF/jsp/network/networkNavbar.jsp"/>
-        </div>
-
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-12 col-md-12 col-lg-12">
 
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 text-right">

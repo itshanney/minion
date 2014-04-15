@@ -18,10 +18,12 @@
                         <span class="glyphicon glyphicon-hdd"></span> Servers
                     </a>
                 </li>
-                <li id="network">
-                    <a href="/m/network">
-                        <span class="glyphicon glyphicon-random"></span> Network
-                    </a>
+                <li class="dropdown" id="network">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-random"></span> Network <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/m/network/certs"><span class="glyphicon glyphicon-list-alt"></span> SSL Certificates</a></li>
+                    </ul>
                 </li>
                 <li id="nimda">
                     <a href="/m/nimda">
