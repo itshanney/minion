@@ -38,8 +38,8 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>${flyway.version}</version>
                 <configuration>
-                    <serverId>localhost.minion</serverId>
-                    <url>jdbc:mysql://localhost/minion</url>
+                    <serverId>minion.mysql</serverId>
+                    <url>${minion.flyway.jdbc.url}</url>
                     <driver>com.mysql.jdbc.Driver</driver>
                 </configuration>
             </plugin>
@@ -50,7 +50,7 @@
                 <version>2.0</version>
                 <configuration>
                     <server>localhost.tomcat</server>
-                    <url>${localhost.tomcat.url}</url>
+                    <url>${minion.tomcat.url}</url>
                     <path>${minion.tomcat.path}</path>
                 </configuration>
             </plugin>
