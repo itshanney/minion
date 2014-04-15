@@ -1,6 +1,7 @@
 package net.hanney.minion.dao;
 
 import net.hanney.minion.model.ServerType;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,8 @@ public class ServerTypesDao extends AbstractDao<ServerType> {
         LOG.debug("Selecting All Active ServerTypes");
         final List<ServerType> serverTypes = new LinkedList<ServerType>();
         final List types = getCurrentSession().createCriteria(ServerType.class)
-                .add(Restrictions.eq("isActive",  Boolean.TRUE))
+                .add(Restrictions.eq("isActive", Boolean.TRUE))
+                .addOrder(Order.asc("typeCode"))
                 .list();
         for(Object type : types) {
             serverTypes.add((ServerType)type);

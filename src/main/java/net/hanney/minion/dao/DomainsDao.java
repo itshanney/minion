@@ -1,6 +1,7 @@
 package net.hanney.minion.dao;
 
 import net.hanney.minion.model.Domain;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ public class DomainsDao extends AbstractDao<Domain> {
         final List<Domain> activeDomains = new LinkedList<Domain>();
         final List domains = getCurrentSession().createCriteria(Domain.class)
                 .add(Restrictions.eq("isActive", Boolean.TRUE))
+                .addOrder(Order.asc("domainName"))
                 .list();
         for(Object domain : domains) {
             activeDomains.add((Domain) domain);

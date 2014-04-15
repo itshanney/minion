@@ -1,6 +1,7 @@
 package net.hanney.minion.dao;
 
 import net.hanney.minion.model.DataCenter;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ public class DataCentersDao extends AbstractDao<DataCenter> {
         final List<DataCenter> dataCenters = new LinkedList<DataCenter>();
         final List types = getCurrentSession().createCriteria(DataCenter.class)
                 .add(Restrictions.eq("isActive", Boolean.TRUE))
+                .addOrder(Order.asc("dataCenterId"))
                 .list();
         for(Object type : types) {
             dataCenters.add((DataCenter) type);

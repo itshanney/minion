@@ -1,6 +1,7 @@
 package net.hanney.minion.dao;
 
 import net.hanney.minion.model.OperatingSystem;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ public class OperatingSystemsDao extends AbstractDao<OperatingSystem> {
         final List<OperatingSystem> operatingSystems = new LinkedList<OperatingSystem>();
         final List types = getCurrentSession().createCriteria(OperatingSystem.class)
                 .add(Restrictions.eq("isActive", Boolean.TRUE))
+                .addOrder(Order.asc("operatingSystemName"))
                 .list();
         for(Object type : types) {
             operatingSystems.add((OperatingSystem) type);

@@ -1,6 +1,7 @@
 package net.hanney.minion.dao;
 
 import net.hanney.minion.model.SslCertificate;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ public class SslCertificatesDao extends AbstractDao<SslCertificate> {
         final List<SslCertificate> activeSslCertificates = new LinkedList<SslCertificate>();
         final List certs = getCurrentSession().createCriteria(SslCertificate.class)
                 .add(Restrictions.eq("isActive", Boolean.TRUE))
+                .addOrder(Order.asc("certificateName"))
                 .list();
         for(Object cert : certs) {
             activeSslCertificates.add((SslCertificate) cert);
