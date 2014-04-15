@@ -52,6 +52,7 @@
                     <server>localhost.tomcat</server>
                     <url>${minion.tomcat.url}</url>
                     <path>${minion.tomcat.path}</path>
+                    <update>true</update>
                 </configuration>
             </plugin>
         </plugins>

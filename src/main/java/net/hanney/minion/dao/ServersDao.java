@@ -1,6 +1,7 @@
 package net.hanney.minion.dao;
 
 import net.hanney.minion.model.Server;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ public class ServersDao extends AbstractDao<Server> {
         final List<Server> servers = new LinkedList<Server>();
         final List types = getCurrentSession().createCriteria(Server.class)
                 .add(Restrictions.eq("isActive", Boolean.TRUE))
+                .addOrder(Order.asc("hostname"))
                 .list();
         for(Object type : types) {
             servers.add((Server) type);
