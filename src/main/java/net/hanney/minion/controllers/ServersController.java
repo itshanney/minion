@@ -60,7 +60,7 @@ public class ServersController extends AbstractController {
         return showServers();
     }
 
-    @RequestMapping(value = "/edit/{serverId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{serverId}/edit", method = RequestMethod.GET)
     public ModelAndView showEditServer(final @PathVariable Long serverId) {
         final Server server = serversService.getServer(serverId);
 

@@ -35,7 +35,7 @@
                         <tbody>
                         <c:forEach var="server" items="${servers}">
                             <tr>
-                                <td><a href="/m/servers/edit/${server.serverId}">${server.hostname}</a></td>
+                                <td><a href="/m/servers/${server.serverId}/edit">${server.hostname}</a></td>
                                 <td>${server.domain.domainName}</td>
                                 <td>${server.dataCenterId}</td>
                                 <td>${server.operatingSystem.operatingSystemName}</td>
