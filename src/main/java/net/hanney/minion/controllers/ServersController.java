@@ -3,14 +3,14 @@ package net.hanney.minion.controllers;
 import net.hanney.minion.model.*;
 import net.hanney.minion.service.NetworkService;
 import net.hanney.minion.service.ServersService;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -28,32 +28,14 @@ public class ServersController extends AbstractController {
     static final String VIEW_VARIABLE_DATA_CENTERS              = "dataCenters";
     static final String VIEW_VARIABLE_DOMAINS                   = "domains";
 
-    static final String FORM_VARIABLE_OPERATING_SYSTEM          = "operatingSystem";
-    static final String FORM_VARIABLE_SERVER_TYPE               = "serverType";
-    static final String FORM_VARIABLE_DATA_CENTER               = "dataCenter";
-    static final String FORM_VARIABLE_HOSTNAME                  = "hostname";
-    static final String FORM_VARIAVLE_DOMAIN_ID                 = "domain";
-
     @Autowired
     private NetworkService networkService;
     @Autowired
     private ServersService serversService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView createServer(final HttpServletRequest request) {
-        final String hostname         = request.getParameter(FORM_VARIABLE_HOSTNAME);
-        final Integer domainid        = NumberUtils.createInteger(request.getParameter(FORM_VARIAVLE_DOMAIN_ID));
-        final String dataCenter       = request.getParameter(FORM_VARIABLE_DATA_CENTER);
-        final Integer operatingSystem = NumberUtils.createInteger(request.getParameter(FORM_VARIABLE_OPERATING_SYSTEM));
-        final Integer serverType      = NumberUtils.createInteger(request.getParameter(FORM_VARIABLE_SERVER_TYPE));
-
-        final Server server = new Server();
-        server.setHostname(hostname);
-        server.setDomainId(domainid);
-        server.setDataCenterId(dataCenter);
-        server.setServerTypeId(serverType);
-        server.setOperatingSystemId(operatingSystem);
-
+    public ModelAndView createServer(final @ModelAttribute Server server,
+                                     final BindingResult bindingResult) {
         serversService.createServer(server);
 
         return showServers();
@@ -71,7 +53,7 @@ public class ServersController extends AbstractController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView showNewServer() {
-        final ModelAndView mv = new ModelAndView("servers/newServer");
+        final ModelAndView mv = new ModelAndView("servers/newServer", "command", new Server());
 
         final List<OperatingSystem> operatingSystems = serversService.getOperatingSystems();
         mv.addObject(VIEW_VARIABLE_OPERATING_SYSTEMS, operatingSystems);

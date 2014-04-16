@@ -1,3 +1,4 @@
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@include file="/WEB-INF/jsp/includes/header.jsp" %>
 
 <div class="container-fluid">
@@ -8,51 +9,35 @@
 
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 text-right">
-                    <form class="form-horizontal" role="form" method="POST" action="/m/servers/create">
+                    <form:form cssClass="form-horizontal" role="form" method="POST" action="/m/servers/create">
                         <div class="form-group">
-                            <label for="hostname" class="col-sm-3 control-label">Hostname</label>
+                            <label class="col-sm-3 control-label">Hostname</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" id="hostname" name="hostname" maxlength="16">
+                                <form:input path="hostname" cssClass="form-control" maxlength="16" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="domain" class="col-sm-3 control-label">Domain</label>
+                            <label class="col-sm-3 control-label">Domain</label>
                             <div class="col-sm-3">
-                                <select class="form-control" name="domain" id="domain">
-                                <c:forEach var="domain" items="${domains}">
-                                    <option value="${domain.domainId}">${domain.domainName}</option>
-                                </c:forEach>
-                                </select>
+                                <form:select path="domainId" cssClass="form-control" items="${domains}" itemValue="domainId" itemLabel="domainName"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="dataCenter" class="col-sm-3 control-label">Data Center</label>
+                            <label class="col-sm-3 control-label">Data Center</label>
                             <div class="col-sm-3">
-                                <select class="form-control" name="dataCenter" id="dataCenter">
-                                <c:forEach var="dc" items="${dataCenters}">
-                                    <option value="${dc.dataCenterId}">${dc.dataCenterId} - ${dc.dataCenterName}</option>
-                                </c:forEach>
-                                </select>
+                                <form:select path="dataCenterId" cssClass="form-control" items="${dataCenters}" itemValue="dataCenterId" itemLabel="dataCenterName"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="serverType" class="col-sm-3 control-label">Server Type</label>
+                            <label class="col-sm-3 control-label">Server Type</label>
                             <div class="col-sm-2">
-                                <select class="form-control" name="serverType" id="serverType">
-                                <c:forEach var="serverType" items="${serverTypes}">
-                                    <option value="${serverType.typeId}">${serverType.typeCode}</option>
-                                </c:forEach>
-                                </select>
+                                <form:select path="serverTypeId" cssClass="form-control" items="${serverTypes}" itemValue="typeId" itemLabel="typeCode"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="operatingSystem" class="col-sm-3 control-label">Operating System</label>
+                            <label class="col-sm-3 control-label">Operating System</label>
                             <div class="col-sm-3">
-                                <select class="form-control" name="operatingSystem" id="operatingSystem">
-                                <c:forEach var="os" items="${operatingSystems}">
-                                    <option value="${os.operatingSystemId}">${os.operatingSystemName}</option>
-                                </c:forEach>
-                                </select>
+                                <form:select path="operatingSystemId" cssClass="form-control" items="${operatingSystems}" itemValue="operatingSystemId" itemLabel="operatingSystemName"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -61,7 +46,7 @@
                                 <a href="/m/servers" class="btn btn-default">Cancel</a>
                             </div>
                         </div>
-                    </form>
+                    </form:form>
                 </div>
             </div>
 
