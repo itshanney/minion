@@ -19,7 +19,7 @@
         <property name="maxIdleTime" value="14400"/>
         <property name="user" value="minion"/>
         <property name="password" value="minion"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost/minion"/>
+        <property name="jdbcUrl" value="${minion.jdbc.url}"/>
     </bean>
 
     <import resource="dao-config.xml" />
