@@ -59,6 +59,17 @@ public class ServersService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void editServer(final Server server) {
+        final Server record = getServer(server.getServerId());
+
+        server.setCreateDate(record.getCreateDate());
+        server.setIsActive(record.getIsActive());
+
+        LOG.debug("Editing Server: {}", server);
+        serversDao.update(server);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void editServerType(final ServerType serverType) {
         LOG.debug("Editing Server Type: {}", serverType);
         serverTypesDao.update(serverType);
@@ -68,6 +79,12 @@ public class ServersService {
     public List<OperatingSystem> getOperatingSystems() {
         LOG.debug("Getting all Operating Systems");
         return operatingSystemsDao.selectActiveOperatingSystems();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Server getServer(final Long serverId) {
+        LOG.debug("Getting Server with ID: {}", serverId);
+        return serversDao.selectServerById(serverId);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

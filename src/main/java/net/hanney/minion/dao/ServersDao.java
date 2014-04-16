@@ -20,6 +20,11 @@ public class ServersDao extends AbstractDao<Server> {
 
     static final Logger LOG = LoggerFactory.getLogger(ServersDao.class);
 
+    public Server selectServerById(final Long serverId) {
+        LOG.debug("Selecting Server by ID: {}", serverId);
+        return (Server) getCurrentSession().get(Server.class, serverId);
+    }
+
     public List<Server> selectActiveServers() {
         LOG.debug("Selecting All Active Servers");
         final List<Server> servers = new LinkedList<Server>();
