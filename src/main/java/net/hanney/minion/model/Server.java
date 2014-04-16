@@ -43,6 +43,13 @@ public class Server implements Serializable {
     @Column(name = "data_center_id")
     private String dataCenterId;
 
+    @Column(name = "domain_id")
+    private Integer domainId;
+
+    @JoinColumn(name = "domain_id", updatable = false, insertable = false)
+    @OneToOne(targetEntity = Domain.class, fetch = FetchType.EAGER)
+    private Domain domain;
+
     @Column(name = "is_active")
     private Boolean isActive;
 
@@ -55,6 +62,22 @@ public class Server implements Serializable {
 
     public void setDataCenterId(final String dataCenterId) {
         this.dataCenterId = dataCenterId;
+    }
+
+    public Domain getDomain() {
+        return domain;
+    }
+
+    public void setDomain(final Domain domain) {
+        this.domain = domain;
+    }
+
+    public Integer getDomainId() {
+        return domainId;
+    }
+
+    public void setDomainId(final Integer domainId) {
+        this.domainId = domainId;
     }
 
     public String getHostname() {
@@ -129,6 +152,7 @@ public class Server implements Serializable {
                 .append("serverTypeId", getServerTypeId())
                 .append("dataCenterId", getDataCenterId())
                 .append("operatingSystemId", getOperatingSystemId())
+                .append("domainId", getDomainId())
                 .append("isActive", getIsActive())
                 .append("createDate", getCreateDate())
                 .toString();

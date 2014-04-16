@@ -1,9 +1,6 @@
 package net.hanney.minion.controllers;
 
-import net.hanney.minion.model.DataCenter;
-import net.hanney.minion.model.OperatingSystem;
-import net.hanney.minion.model.Server;
-import net.hanney.minion.model.ServerType;
+import net.hanney.minion.model.*;
 import net.hanney.minion.service.NetworkService;
 import net.hanney.minion.service.ServersService;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -29,11 +26,13 @@ public class ServersController extends AbstractController {
     static final String VIEW_VARIABLE_OPERATING_SYSTEMS         = "operatingSystems";
     static final String VIEW_VARIABLE_SERVER_TYPES              = "serverTypes";
     static final String VIEW_VARIABLE_DATA_CENTERS              = "dataCenters";
+    static final String VIEW_VARIABLE_DOMAINS                   = "domains";
 
     static final String FORM_VARIABLE_OPERATING_SYSTEM          = "operatingSystem";
     static final String FORM_VARIABLE_SERVER_TYPE               = "serverType";
     static final String FORM_VARIABLE_DATA_CENTER               = "dataCenter";
     static final String FORM_VARIABLE_HOSTNAME                  = "hostname";
+    static final String FORM_VARIAVLE_DOMAIN_ID                 = "domain";
 
     @Autowired
     private NetworkService networkService;
@@ -43,12 +42,14 @@ public class ServersController extends AbstractController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView createServer(final HttpServletRequest request) {
         final String hostname         = request.getParameter(FORM_VARIABLE_HOSTNAME);
+        final Integer domainid        = NumberUtils.createInteger(request.getParameter(FORM_VARIAVLE_DOMAIN_ID));
         final String dataCenter       = request.getParameter(FORM_VARIABLE_DATA_CENTER);
         final Integer operatingSystem = NumberUtils.createInteger(request.getParameter(FORM_VARIABLE_OPERATING_SYSTEM));
         final Integer serverType      = NumberUtils.createInteger(request.getParameter(FORM_VARIABLE_SERVER_TYPE));
 
         final Server server = new Server();
         server.setHostname(hostname);
+        server.setDomainId(domainid);
         server.setDataCenterId(dataCenter);
         server.setServerTypeId(serverType);
         server.setOperatingSystemId(operatingSystem);
@@ -80,6 +81,9 @@ public class ServersController extends AbstractController {
 
         final List<DataCenter> dataCenters = networkService.getActiveDataCenters();
         mv.addObject(VIEW_VARIABLE_DATA_CENTERS, dataCenters);
+
+        final List<Domain> domains = networkService.getActiveDomains();
+        mv.addObject(VIEW_VARIABLE_DOMAINS, domains);
 
         return mv;
     }

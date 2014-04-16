@@ -16,6 +16,16 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="domain" class="col-sm-3 control-label">Domain</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" name="domain" id="domain">
+                                <c:forEach var="domain" items="${domains}">
+                                    <option value="${domain.domainId}">${domain.domainName}</option>
+                                </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="dataCenter" class="col-sm-3 control-label">Data Center</label>
                             <div class="col-sm-3">
                                 <select class="form-control" name="dataCenter" id="dataCenter">
