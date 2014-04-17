@@ -1,8 +1,10 @@
 package net.hanney.minion.service;
 
+import net.hanney.minion.dao.DnsRecordsDao;
 import net.hanney.minion.dao.SslCertificatesDao;
 import net.hanney.minion.dao.DataCentersDao;
 import net.hanney.minion.dao.DomainsDao;
+import net.hanney.minion.model.DnsRecord;
 import net.hanney.minion.model.SslCertificate;
 import net.hanney.minion.model.DataCenter;
 import net.hanney.minion.model.Domain;
@@ -32,6 +34,8 @@ public class NetworkService {
     @Autowired
     private DataCentersDao dataCentersDao;
     @Autowired
+    private DnsRecordsDao dnsRecordsDao;
+    @Autowired
     private DomainsDao domainsDao;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -40,6 +44,14 @@ public class NetworkService {
         dataCenter.setIsActive(Boolean.TRUE);
         LOG.debug("Creating new Data Center: {}", dataCenter);
         dataCentersDao.insert(dataCenter);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void createDnsRecord(final DnsRecord dnsRecord) {
+        dnsRecord.setCreateDate(new DateTime().toDate());
+        dnsRecord.setIsActive(Boolean.TRUE);
+        LOG.debug("Creating new DNS Record: {}", dnsRecord);
+        dnsRecordsDao.insert(dnsRecord);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -74,6 +86,12 @@ public class NetworkService {
     public List<DataCenter> getActiveDataCenters() {
         LOG.debug("Getting all Active Data Centers");
         return dataCentersDao.selectActiveServerTypes();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<DnsRecord> getActiveDnsRecords() {
+        LOG.debug("Getting all Active DNS Records");
+        return dnsRecordsDao.selectActiveDnsRecords();
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

@@ -1,5 +1,6 @@
 package net.hanney.minion.controllers;
 
+import net.hanney.minion.model.DnsRecord;
 import net.hanney.minion.model.SslCertificate;
 import net.hanney.minion.model.Domain;
 import net.hanney.minion.service.NetworkService;
@@ -28,12 +29,34 @@ public class NetworkController extends AbstractController {
     static final String VIEW_VARIABLE_CURRENT_NAVBAR_ITEM               = "currentNavbarItem";
     static final String VIEW_VARIABLE_SSL_CERTIFICATES                  = "sslCertificates";
     static final String VIEW_VARIABLE_DOMAINS                           = "domains";
+    static final String VIEW_VARIABLE_DNS_RECORDS                       = "dnsRecords";
 
     static final String FORM_VARIABLE_CERTIFICATE_NAME                  = "certificateName";
     static final String FORM_VARIABLE_DOMAIN_ID                         = "domainId";
+    static final String FORM_VARIABLE_DNS_NAME                          = "name";
+    static final String FORM_VARIABLE_DNS_VALUE                         = "value";
+    static final String FORM_VARIAVLE_DNS_TYPE                          = "type";
 
     @Autowired
     private NetworkService networkService;
+
+    @RequestMapping(value = "/dns/create", method = RequestMethod.POST)
+    public ModelAndView createDnsRecord(final HttpServletRequest request) {
+        final String name      = request.getParameter(FORM_VARIABLE_DNS_NAME);
+        final Integer domainId = NumberUtils.createInteger(request.getParameter(FORM_VARIABLE_DOMAIN_ID));
+        final String value     = request.getParameter(FORM_VARIABLE_DNS_VALUE);
+        final String type      = request.getParameter(FORM_VARIAVLE_DNS_TYPE);
+
+        final DnsRecord dnsRecord = new DnsRecord();
+        dnsRecord.setName(name);
+        dnsRecord.setDomainId(domainId);
+        dnsRecord.setType(type);
+        dnsRecord.setValue(value);
+
+        networkService.createDnsRecord(dnsRecord);
+
+        return showDnsRecords();
+    }
 
     @RequestMapping(value = "/cert/create", method = RequestMethod.POST)
     public ModelAndView createSslCertificate(final HttpServletRequest request) {
@@ -65,6 +88,17 @@ public class NetworkController extends AbstractController {
         return showSslCertificates();
     }
 
+    @RequestMapping(value = "/dns", method = RequestMethod.GET)
+    public ModelAndView showDnsRecords() {
+        final ModelAndView mv = new ModelAndView("network/showDnsRecords");
+        setCurrentNavbarItem(mv, NetworkNavbarItem.DNS_RECORDS);
+
+        final List<DnsRecord> dnsRecords = networkService.getActiveDnsRecords();
+        mv.addObject(VIEW_VARIABLE_DNS_RECORDS, dnsRecords);
+
+        return mv;
+    }
+
     @RequestMapping(value = "/certs", method = RequestMethod.GET)
     public ModelAndView showSslCertificates() {
         final ModelAndView mv = new ModelAndView("network/showCertificates");
@@ -72,6 +106,18 @@ public class NetworkController extends AbstractController {
 
         final List<SslCertificate> sslCertificates = networkService.getActiveCertificates();
         mv.addObject(VIEW_VARIABLE_SSL_CERTIFICATES, sslCertificates);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/dns/new", method = RequestMethod.GET)
+    public ModelAndView showNewDnsRecord() {
+        final ModelAndView mv = new ModelAndView("network/newDnsRecord");
+        setCurrentNavbarItem(mv, NetworkNavbarItem.SSL_CERTIFICATES);
+
+        // Load all of the existing Domains
+        final List<Domain> domains = networkService.getActiveDomains();
+        mv.addObject(VIEW_VARIABLE_DOMAINS, domains);
 
         return mv;
     }

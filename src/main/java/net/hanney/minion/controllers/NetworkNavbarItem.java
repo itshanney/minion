@@ -7,6 +7,7 @@ package net.hanney.minion.controllers;
  */
 public enum NetworkNavbarItem {
 
+    DNS_RECORDS("DNS Records", "/m/network/dns"),
     SSL_CERTIFICATES("SSL Certificates", "/m/network/certs");
 
     private NetworkNavbarItem(final String itemName, final String itemLink) {
