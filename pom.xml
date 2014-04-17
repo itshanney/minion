@@ -56,7 +56,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.0</version>
                 <configuration>
-                    <server>localhost.tomcat</server>
+                    <server>${minion.tomcat.server}</server>
                     <url>${minion.tomcat.url}</url>
                     <path>${minion.tomcat.path}</path>
                     <update>true</update>
