@@ -23,6 +23,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">IP Address</label>
+                            <div class="col-sm-3">
+                                <form:input path="ipAddress" cssClass="form-control" maxlength="16" />
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Data Center</label>
                             <div class="col-sm-3">
                                 <form:select path="dataCenterId" cssClass="form-control" items="${dataCenters}" itemValue="dataCenterId" itemLabel="dataCenterName"/>

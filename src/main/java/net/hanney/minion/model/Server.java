@@ -26,6 +26,9 @@ public class Server implements Serializable {
     @Column(name = "hostname")
     private String hostname;
 
+    @Column(name = "ip_address")
+    private String ipAddress;
+
     @Column(name = "server_type_id")
     private Integer serverTypeId;
 
@@ -86,6 +89,14 @@ public class Server implements Serializable {
 
     public void setHostname(final String hostname) {
         this.hostname = hostname;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(final String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
     public OperatingSystem getOperatingSystem() {
@@ -149,6 +160,7 @@ public class Server implements Serializable {
         return new ToStringBuilder(this)
                 .append("serverId", getServerId())
                 .append("hostname", getHostname())
+                .append("ipAddress", getIpAddress())
                 .append("serverTypeId", getServerTypeId())
                 .append("dataCenterId", getDataCenterId())
                 .append("operatingSystemId", getOperatingSystemId())
