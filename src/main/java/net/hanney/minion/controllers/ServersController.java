@@ -42,6 +42,15 @@ public class ServersController extends AbstractController {
         return showServers();
     }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ModelAndView deleteServer(final @ModelAttribute Server server,
+                                     final BindingResult bindingResult)
+    {
+        serversService.deleteServer(server);
+
+        return showServers();
+    }
+
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView editServer(final @ModelAttribute Server server,
                                    final BindingResult bindingResult) {
@@ -58,6 +67,16 @@ public class ServersController extends AbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index() {
         return showServers();
+    }
+
+    @RequestMapping(value = "/{serverId}/delete", method = RequestMethod.GET)
+    public ModelAndView showDeleteServer(final @PathVariable Long serverId)
+    {
+        final Server server = serversService.getServer(serverId);
+
+        final ModelAndView mv = new ModelAndView("servers/deleteServer", "command", server);
+
+        return mv;
     }
 
     @RequestMapping(value = "/{serverId}/edit", method = RequestMethod.GET)

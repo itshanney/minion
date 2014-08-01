@@ -59,6 +59,15 @@ public class ServersService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void deleteServer(final Server server)
+    {
+        final Server record = getServer(server.getServerId());
+
+        LOG.debug("Deleting Server: {}", server);
+        serversDao.delete(record);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void editServer(final Server server) {
         final Server record = getServer(server.getServerId());
 

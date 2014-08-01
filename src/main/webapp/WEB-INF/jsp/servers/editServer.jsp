@@ -51,6 +51,7 @@
                                 <form:hidden path="serverId"/>
                                 <button type="submit" class="btn btn-success">Edit Server</button>
                                 <a href="/m/servers" class="btn btn-default">Cancel</a>
+                                <a href="/m/servers/${command.serverId}/delete" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
                     </form:form>
