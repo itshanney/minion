@@ -47,6 +47,32 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Volumes
+                                <a href="<spring:url value="/m/servers/${command.serverId}/volume/new"/>" class="btn btn-xs btn-success">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </a>
+                            </label>
+                            <div class="col-sm-3 text-left">
+                                <c:if test="${not empty volumes}">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <th>Mount Point</th>
+                                        <th>Size (GB)</th>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="volume" items="${volumes}">
+                                        <tr>
+                                            <td>${volume.mountPoint}</td>
+                                            <td>${volume.sizeGb}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                                </c:if>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9 text-left">
                                 <form:hidden path="serverId"/>
                                 <button type="submit" class="btn btn-success">Edit Server</button>

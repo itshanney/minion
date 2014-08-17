@@ -28,6 +28,7 @@ public class ServersController extends AbstractController {
     static final String VIEW_VARIABLE_SERVER_TYPES              = "serverTypes";
     static final String VIEW_VARIABLE_DATA_CENTERS              = "dataCenters";
     static final String VIEW_VARIABLE_DOMAINS                   = "domains";
+    static final String VIEW_VARIABLE_VOLUMES                   = "volumes";
 
     @Autowired
     private NetworkService networkService;
@@ -38,6 +39,14 @@ public class ServersController extends AbstractController {
     public ModelAndView createServer(final @ModelAttribute Server server,
                                      final BindingResult bindingResult) {
         serversService.createServer(server);
+
+        return showServers();
+    }
+
+    @RequestMapping(value = "/volume/create", method = RequestMethod.POST)
+    public ModelAndView createServerVolume(final @ModelAttribute ServerVolume serverVolume,
+                                           final BindingResult bindingResult) {
+        serversService.createServerVolume(serverVolume);
 
         return showServers();
     }
@@ -97,6 +106,9 @@ public class ServersController extends AbstractController {
         final List<Domain> domains = networkService.getActiveDomains();
         mv.addObject(VIEW_VARIABLE_DOMAINS, domains);
 
+        final List<ServerVolume> volumes = serversService.getServerVolumes(serverId);
+        mv.addObject(VIEW_VARIABLE_VOLUMES, volumes);
+
         return mv;
     }
 
@@ -117,6 +129,14 @@ public class ServersController extends AbstractController {
         mv.addObject(VIEW_VARIABLE_DOMAINS, domains);
 
         return mv;
+    }
+
+    @RequestMapping(value = "/{serverId}/volume/new", method = RequestMethod.GET)
+    public ModelAndView showNewServerVolume(final @PathVariable Long serverId) {
+        final ServerVolume serverVolume = new ServerVolume();
+        serverVolume.setServerId(serverId);
+
+        return new ModelAndView("servers/newServerVolume", "command", serverVolume);
     }
 
     public ModelAndView showServers() {

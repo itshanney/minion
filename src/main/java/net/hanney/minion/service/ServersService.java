@@ -2,10 +2,12 @@ package net.hanney.minion.service;
 
 import net.hanney.minion.dao.OperatingSystemsDao;
 import net.hanney.minion.dao.ServerTypesDao;
+import net.hanney.minion.dao.ServerVolumesDao;
 import net.hanney.minion.dao.ServersDao;
 import net.hanney.minion.model.OperatingSystem;
 import net.hanney.minion.model.Server;
 import net.hanney.minion.model.ServerType;
+import net.hanney.minion.model.ServerVolume;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,8 @@ public class ServersService {
     private ServersDao serversDao;
     @Autowired
     private ServerTypesDao serverTypesDao;
+    @Autowired
+    private ServerVolumesDao serverVolumesDao;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createOperatingSystem(final OperatingSystem operatingSystem) {
@@ -56,6 +60,14 @@ public class ServersService {
         serverType.setIsActive(Boolean.TRUE);
         LOG.debug("Creating new Server Type: {}", serverType);
         serverTypesDao.insert(serverType);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void createServerVolume(final ServerVolume serverVolume) {
+        serverVolume.setCreateDate(new DateTime().toDate());
+        serverVolume.setIsActive(Boolean.TRUE);
+        LOG.debug("Creating new Server Volume: {}", serverVolume);
+        serverVolumesDao.insert(serverVolume);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -112,6 +124,12 @@ public class ServersService {
     public ServerType getServerType(final Integer typeId) {
         LOG.debug("Getting Server Type with ID: {}", typeId);
         return serverTypesDao.selectServerTypeById(typeId);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<ServerVolume> getServerVolumes(final Long serverId) {
+        LOG.debug("Getting Server Volumes for Server ID: {}", serverId);
+        return serverVolumesDao.selectActiveServerVolumesByServerId(serverId);
     }
 
 }
