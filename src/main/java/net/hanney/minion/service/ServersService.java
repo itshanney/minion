@@ -75,8 +75,17 @@ public class ServersService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void deleteServer(final Server server)
     {
+        // Load the record to be deleted
         final Server record = getServer(server.getServerId());
 
+        // Delete all of the Server Volumes associated with the Server
+        final List<ServerVolume> serverVolumes = serverVolumesDao.selectActiveServerVolumesByServerId(record.getServerId());
+        for(ServerVolume volume : serverVolumes) {
+            LOG.debug("Deleting Server Volume: {}", volume);
+            serverVolumesDao.delete(volume);
+        }
+
+        // Actually delete the record
         LOG.debug("Deleting Server: {}", server);
         serversDao.delete(record);
     }
