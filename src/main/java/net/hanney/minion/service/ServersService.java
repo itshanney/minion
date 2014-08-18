@@ -6,6 +6,7 @@ import net.hanney.minion.dao.ServerVolumesDao;
 import net.hanney.minion.dao.ServersDao;
 import net.hanney.minion.model.OperatingSystem;
 import net.hanney.minion.model.Server;
+import net.hanney.minion.model.ServerState;
 import net.hanney.minion.model.ServerType;
 import net.hanney.minion.model.ServerVolume;
 import org.joda.time.DateTime;
@@ -48,6 +49,7 @@ public class ServersService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createServer(final Server server) {
+        server.setServerState(ServerState.ACTIVE);
         server.setCreateDate(new DateTime().toDate());
         server.setIsActive(Boolean.TRUE);
         LOG.debug("Creating new Server: {}", server);
@@ -111,7 +113,7 @@ public class ServersService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<Server> getServers() {
         LOG.debug("Getting all Servers");
-        return serversDao.selectActiveServers();
+        return serversDao.selectServersWithState(ServerState.ACTIVE);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

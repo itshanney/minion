@@ -53,6 +53,10 @@ public class Server implements Serializable {
     @OneToOne(targetEntity = Domain.class, fetch = FetchType.EAGER)
     private Domain domain;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "server_state")
+    private ServerState serverState;
+
     @Column(name = "is_active")
     private Boolean isActive;
 
@@ -123,6 +127,14 @@ public class Server implements Serializable {
         this.serverId = serverId;
     }
 
+    public ServerState getServerState() {
+        return serverState;
+    }
+
+    public void setServerState(final ServerState serverState) {
+        this.serverState = serverState;
+    }
+
     public ServerType getServerType() {
         return serverType;
     }
@@ -165,6 +177,7 @@ public class Server implements Serializable {
                 .append("dataCenterId", getDataCenterId())
                 .append("operatingSystemId", getOperatingSystemId())
                 .append("domainId", getDomainId())
+                .append("serverState", getServerState())
                 .append("isActive", getIsActive())
                 .append("createDate", getCreateDate())
                 .toString();
