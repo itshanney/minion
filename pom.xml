@@ -6,7 +6,7 @@
     <groupId>net.hanney</groupId>
     <artifactId>minion</artifactId>
     <packaging>war</packaging>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>Minion Server Wrangler</name>
     <description>Minion is an application to help developers wrangle servers</description>
 
