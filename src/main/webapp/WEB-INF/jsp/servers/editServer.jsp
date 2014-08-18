@@ -49,27 +49,37 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
                                 Volumes
+                                <c:if test="${not empty volumes}">
                                 <a href="<spring:url value="/m/servers/${command.serverId}/volume/new"/>" class="btn btn-xs btn-success">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </a>
+                                </c:if>
                             </label>
                             <div class="col-sm-3 text-left">
-                                <c:if test="${not empty volumes}">
-                                <table class="table table-bordered">
-                                    <thead>
+                                <c:choose>
+                                    <c:when test="${not empty volumes}">
+                                    <table class="table table-bordered">
+                                        <thead>
                                         <th>Mount Point</th>
                                         <th>Size (GB)</th>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="volume" items="${volumes}">
-                                        <tr>
-                                            <td>${volume.mountPoint}</td>
-                                            <td>${volume.sizeGb}</td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-                                </c:if>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach var="volume" items="${volumes}">
+                                            <tr>
+                                                <td>${volume.mountPoint}</td>
+                                                <td>${volume.sizeGb}</td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                    </c:when>
+                                    <c:otherwise>
+                                    <a href="<spring:url value="/m/servers/${command.serverId}/volume/new"/>" class="btn btn-sm btn-success">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        New Server Volume
+                                    </a>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <div class="form-group">
