@@ -1,6 +1,8 @@
 package net.hanney.minion.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -8,15 +10,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Model that defines a User that is able to be authenticated to use Minion
  *
  * @author justin.hanney
  */
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
+
+    private final List<GrantedAuthority> authorities;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,6 +46,14 @@ public class User implements Serializable {
 
     @Column(name = "create_date")
     private Date createDate;
+
+    public User() {
+        authorities = new LinkedList<GrantedAuthority>();
+    }
+
+    public List<GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
 
     public String getEmail() {
         return email;
@@ -65,6 +79,7 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -81,6 +96,11 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
     public Boolean getIsActive() {
         return isActive;
     }
@@ -95,6 +115,26 @@ public class User implements Serializable {
 
     public void setCreateDate(final Date createDate) {
         this.createDate = createDate;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return getIsActive();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return getIsActive();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return getIsActive();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return getIsActive();
     }
 
     @Override

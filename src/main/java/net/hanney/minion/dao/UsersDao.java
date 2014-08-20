@@ -1,6 +1,7 @@
 package net.hanney.minion.dao;
 
 import net.hanney.minion.model.User;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,8 +12,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UsersDao extends AbstractDao<User> {
 
-    public User selectUserById(final Long userId) {
-        LOG.debug("Selecting User by ID: {}", userId);
-        return (User) getCurrentSession().get(User.class, userId);
+    public User selectUserByEmail(final String email) {
+        LOG.debug("Selecting User by Email: {}", email);
+        return (User) getCurrentSession().createCriteria(User.class)
+                .add(Restrictions.eq("email", email))
+                .add(Restrictions.eq("isActive", Boolean.TRUE))
+                .uniqueResult();
     }
+
 }

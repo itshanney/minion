@@ -18,6 +18,7 @@
         <commons-lang.version>3.1</commons-lang.version>
         <flyway.version>2.3 </flyway.version>
         <hibernate.version>4.2.10.Final</hibernate.version>
+        <jasypt.version>1.9.2</jasypt.version>
         <joda-time.version>2.3</joda-time.version>
         <junit.version>4.7</junit.version>
         <log4j.version>1.2.16</log4j.version>
@@ -25,6 +26,7 @@
         <mysql.version>5.1.22</mysql.version>
         <slf4j.version>1.7.6</slf4j.version>
         <spring.version>3.2.0.RELEASE</spring.version>
+        <spring-security.version>3.1.0.RELEASE</spring-security.version>
     </properties>
 
     <scm>
@@ -109,6 +111,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>${jasypt.version}</version>
+        </dependency>
 
         <!-- Logging Dependencies -->
         <dependency>
@@ -153,6 +160,18 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Spring Security Dependencies -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
 
         <!-- Minion Website Dependencies -->
