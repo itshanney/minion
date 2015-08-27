@@ -14,20 +14,35 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
 
+        <minion.jdbc.url>jdbc:mysql://localhost/minion</minion.jdbc.url>
+
         <c3p0.version>0.9.1.2</c3p0.version>
         <commons-lang.version>3.1</commons-lang.version>
         <flyway.version>2.3 </flyway.version>
         <hibernate.version>4.2.10.Final</hibernate.version>
         <jasypt.version>1.9.2</jasypt.version>
+        <java.version>1.8</java.version>
         <joda-time.version>2.3</joda-time.version>
         <junit.version>4.7</junit.version>
         <log4j.version>1.2.16</log4j.version>
         <mockito.version>1.9.5</mockito.version>
         <mysql.version>5.1.22</mysql.version>
         <slf4j.version>1.7.6</slf4j.version>
-        <spring.version>3.2.0.RELEASE</spring.version>
-        <spring-security.version>3.1.0.RELEASE</spring-security.version>
+        <spring.version>4.1.4.RELEASE</spring.version>
+        <spring-security.version>3.2.5.RELEASE</spring-security.version>
+
+        <!-- Maven plugins -->
+        <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>production</id>
+            <properties>
+                <minion.jdbc.url>jdbc:mysql://lwpemysql.tideworks.com/minion</minion.jdbc.url>
+            </properties>
+        </profile>
+    </profiles>
 
     <scm>
         <connection>scm:git:https://github.com/itshaney/minion</connection>
@@ -42,6 +57,16 @@
         </resources>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>com.googlecode.flyway</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
@@ -134,43 +159,55 @@
             <version>${slf4j.version}</version>
         </dependency>
 
-        <!-- Spring Dependencies -->
+        <!-- Spring Security and MVC dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-context</artifactId>
-          <version>${spring.version}</version>
-          <exclusions>
-              <exclusion>
-                  <groupId>commons-logging</groupId>
-                  <artifactId>commons-logging</artifactId>
-              </exclusion>
-          </exclusions>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
+            <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
-        </dependency>
-
-        <!-- Spring Security Dependencies -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>${spring-security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-expression</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
             <version>${spring-security.version}</version>
         </dependency>
 
@@ -190,11 +227,6 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time-jsptags</artifactId>
             <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
         </dependency>
         
         <!-- Test Dependencies -->
