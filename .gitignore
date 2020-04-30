@@ -2,7 +2,12 @@
 .project
 target
 bin
-*.iml
 .settings
 .metadata
+
+# macOS files
+.DS_Store
+
+# IntelliJ files
+*.iml
 .idea
